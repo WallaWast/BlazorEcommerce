@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace BlazorEcommerce.Server.Controllers
 {
@@ -15,10 +14,15 @@ namespace BlazorEcommerce.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProduct()
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProduct()
         {
             var products = await _context.Products.ToListAsync();
-            return Ok(products);
+            var response = new ServiceResponse<List<Product>>()
+            {
+                Data = products
+            };
+
+            return Ok(response);
         }
     }
 }
